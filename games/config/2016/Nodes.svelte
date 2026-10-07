@@ -44,8 +44,6 @@
         // driveMap{reversedAlliance}{AllianceColor}{liveLocation}
 
   function update() {
-    if ((level < 5 && $liveGamepiece == "Coral") || (level >= 5 && $liveGamepiece == "Algae")) {
-
     
     if ($gameState === 0) {
       //            $liveLocation = "Floor"; //force pickup location to be floor in auto
@@ -53,12 +51,9 @@
     } else {
       $teleDataLog.push(JSON.parse(JSON.stringify($gameData)));
     }
-    if ($liveLocation == "NearStation" || $liveLocation == "FarStation" || $liveLocation == "NearFloor" || $liveLocation == "FarFloor"){
-      driverField = driveMap[$reversedAlliance][$gameData["AllianceColor"]][$liveLocation];
-      $gameData[driverField] ++;
+    if (level >= 3) {
+      $liveGamepiece = "Cross";
     }
-
-
     dataField = gameMode + gameLevelMap[level] + $liveGamepiece + type;
     locationField = gameMode + $liveLocation + $liveGamepiece + "Collect";
     console.log("LocationField" + locationField)
@@ -77,34 +72,37 @@
   
 
     }
-  }
 
   let gameLevelMap = {
-    1: "L1",
-    2: "L2",
-    3: "L3",
-    4: "L4",
-    5: "Processor",
-    6: "Net"
+    1: "Low",
+    2: "High",
+    3: "Port",
+    4: "Cheval",
+    5: "Moat",
+    6: "Terrain",
+    7: "Ramparts",
+    8: "Draw",
+    9: "Sally",
+    10: "Lowbar"
   };
 </script>
 
 <div class="indicator">
 
-  {#if level == 1 || level==3 || level==2 || level==4}
+  {#if level == 1 || level==2}
  
   <span class="indicator-item badge badge-accent text-2xl"
-    >{$gameData[gameMode + gameLevelMap[level] + "Coral" + type]}</span
+    >{$gameData[gameMode + gameLevelMap[level] + "Boulder" + type]}</span
   >
   {/if}
- {#if level==5 || level==6}
- <span class="indicator-item indicator-item badge badge-secondary text-xl"
-  >{$gameData[gameMode + gameLevelMap[level] + "Algae" + type]}</span
+ {#if level >= 3}
+ <span class="indicator-item badge badge-secondary text-xl"
+  >{$gameData[gameMode + gameLevelMap[level] + "Cross" + type]}</span
 >
 {/if}
   <button
     class="btn btn-square btn-outline rounded-md w-20 h-20"
-    disabled={$liveGamepiece == 0}
+    disabled={$liveGamepiece == 0 && level < 3}
     on:click={update}
   >
     {#if type === "Success"}

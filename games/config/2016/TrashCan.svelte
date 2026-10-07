@@ -36,12 +36,8 @@
 </script>
 <div class="indicator">
     <span class="indicator-item badge badge-accent text-xl"
-        >{$gameData[gameMode + "Coral" + "Drop"]}</span
+        >{$gameData[gameMode + "Boulder" + "Drop"]}</span
     >
-    <span class="indicator-item indicator-start badge badge-secondary text-xl"
-        >{$gameData[gameMode + "Algae" + "Drop"]}</span
-    >
-    
   
 <button class="btn btn-square btn-outline w-24 h-24 btn-error" on:click={update} disabled={$liveGamepiece == 0}>
     <svg
